@@ -1,4 +1,12 @@
-# Getting Started with Create React App
+# Store Front
+
+## Author Luis Rosales
+
+## Credit/ Collab
+
+- Tyler Main, Stephanie Hill, Stephen Martinez, and demo code
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
