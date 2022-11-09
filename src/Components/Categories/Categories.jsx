@@ -1,12 +1,11 @@
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Typography from '@mui/material/Typography';
-import { filterCategory } from '../../store/Product';
+import { filterCategory } from '../../store/Reducers/Product';
 import { connect } from 'react-redux';
 
 
 const Categories = (props) => {
-
   const { filterCategory } = props;
 
   return (
@@ -14,10 +13,13 @@ const Categories = (props) => {
       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
         Browse our Categories
       </Typography>
-      <ButtonGroup variant="text" aria-label="text button group">
-        <Button onClick={() => filterCategory('food')}>Food</Button>
-        <Button onClick={() => filterCategory('electronics')}>Electronics</Button>
+      {
+      props.categories.map((category, index) => (
+      <ButtonGroup key={`category-${index}`} variant="text" aria-label="text button group">
+        <Button onClick={() => filterCategory(category.name)}>{category.displayName}</Button>
       </ButtonGroup>
+      ))
+    }
     </>
 
   )
@@ -25,7 +27,7 @@ const Categories = (props) => {
 
 const mapStateToProps = ({ productReducer }) => {
   return {
-    list: productReducer,
+    products: productReducer,
     categories: productReducer.categories,
   }
 }
