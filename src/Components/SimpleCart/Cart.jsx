@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import { removeItemFromCart } from '../../store/Reducers/Cart';
 import React from 'react';
+
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -35,20 +37,24 @@ const SimpleCart = (props) => {
           <ListSubheader component="div" id="nested-list-subheader"></ListSubheader>
         }
       >
+
         <ListItemButton onClick={handleClick}>
           <ListItemIcon>
             <ShoppingCartIcon />
           </ListItemIcon>
+
           <ListItemText
             primary={quantity} />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
+
         <Collapse in={open} timeout="auto" unmountOnExit>
           {
             props.cart.itemsToPurchase.map((item, index) => (
+
               <List key={`item-${index}`} component="div" disablePadding>
                 <ListItemButton onClick={() => removeItemFromCart(item)} aria-label="delete" sx={{ pl: 4 }}>
-                  <ListItemText primary={item.name} />
+                  <ListItemText primary={item.name} secondary={item.qty} />
                   <ListItemIcon >
                     <DeleteOutlineIcon />
                   </ListItemIcon>
@@ -58,8 +64,8 @@ const SimpleCart = (props) => {
 
           }
         </Collapse>
-
       </List>
+
     </>
   )
 }
@@ -67,7 +73,7 @@ const SimpleCart = (props) => {
 const mapStateToProps = ({ cartReducer }) => {
   return {
     cart: cartReducer,
-    quantity: cartReducer.quantityInCart,
+    quantity: cartReducer.totalItems,
   }
 }
 
