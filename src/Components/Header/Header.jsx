@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 // import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Cart from '../SimpleCart/Cart'
-import { connect } from 'react-redux';
+
 
 const Header = () => {
   const theme = createTheme({
@@ -49,15 +49,4 @@ const Header = () => {
   );
 }
 
-
-const mapStateToProps = ({ cartReducer }) => {
-  return {
-    quantity: cartReducer.quantityInCart,
-  }
-}
-
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

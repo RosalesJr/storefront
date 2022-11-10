@@ -1,11 +1,22 @@
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Typography from '@mui/material/Typography';
-import { filterCategory } from '../../store/Reducers/Product';
-import { connect } from 'react-redux';
+import { getCategories, filterCategory } from '../../store/Reducers/Categories';
+import { connect, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 
 const Categories = (props) => {
+
+  let dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCategories());
+     // linter will want 'incomplete' added to dependency array unnecessarily. 
+    // disable code used to avoid linter warning 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const { filterCategory } = props;
 
   return (
@@ -14,21 +25,20 @@ const Categories = (props) => {
         Browse our Categories
       </Typography>
       {
-      props.categories.map((category, index) => (
-      <ButtonGroup key={`category-${index}`} variant="text" aria-label="text button group">
-        <Button onClick={() => filterCategory(category.name)}>{category.displayName}</Button>
-      </ButtonGroup>
-      ))
-    }
+        props.categories.map((category, index) => (
+          <ButtonGroup key={`category-${index}`} variant="text" aria-label="text button group">
+            <Button onClick={() => filterCategory(category.name)}>{category.name}</Button>
+          </ButtonGroup>
+        ))
+      }
     </>
 
   )
 }
 
-const mapStateToProps = ({ productReducer }) => {
+const mapStateToProps = ({ categoryReducer }) => {
   return {
-    products: productReducer,
-    categories: productReducer.categories,
+    categories: categoryReducer.categories,
   }
 }
 

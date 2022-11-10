@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { addItemToCart } from '../../store/Reducers/Cart';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -9,13 +9,21 @@ import { Container, Box } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import {useEffect} from 'react';
+import { getProducts } from '../../store/Reducers/Product';
 
 
 const List = (props) => {
-  const filteredProducts = props.list.products.filter(product => product.category === props.list.activeCategory);
-  const filteredCategory = props.list.categories.filter(category => category.name === props.list.activeCategory);
+  let dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+      // linter will want 'incomplete' added to dependency array unnecessarily. 
+    // disable code used to avoid linter warning 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const { addItemToCart } = props;
-  console.log(props.list.activeCategory)
 
 
 
@@ -23,7 +31,7 @@ const List = (props) => {
     <>
       <Container align="center">
         {
-           filteredCategory.map((category, index) => (
+            props.list.map((category, index) => (
             <Card key={`category-${index}`} variant="text">
               <Typography variant="h3">{category.displayName}</Typography>
               <Typography>{category.desciption}</Typography>
@@ -32,7 +40,7 @@ const List = (props) => {
         }
         <Box sx={{ display: 'flex', flexDirection: 'row', margin: '25px', justifyContent: 'space-around', padding: '0', }}>
           {
-             filteredProducts.map((products, index) => (
+              props.list.map((products, index) => (
               <Card key={`products-${index}`} sx={{ width: '250px', }}>
                 <CardMedia
                   component='img'
@@ -75,7 +83,7 @@ const List = (props) => {
 
 const mapStateToProps = ({ productReducer, cartReducer }) => {
   return {
-    list: productReducer,
+    list: productReducer.products,
     cart: cartReducer,
   }
 }
